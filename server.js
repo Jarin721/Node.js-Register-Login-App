@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
+require('dotenv').config();
 
 const MongoDBURI = process.env.MONGO_URI || 'mongodb://localhost/ManualAuth';
 
@@ -20,7 +21,7 @@ db.once('open', () => {
 });
 
 app.use(session({
-  secret: 'work hard',
+  secret: process.env.SESSION_SECRET || 'defaultSecret',
   resave: true,
   saveUninitialized: false,
   store: new MongoStore({
